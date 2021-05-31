@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "603089776461",
+    "project_id": "atomic-hybrid-311418",
+    "storage_bucket": "atomic-hybrid-311418.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:603089776461:android:91e051079d8dbbf0de1104",
+        "android_client_info": {
+          "package_name": "com.example.flutter_app_prjk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "603089776461-5ljer13i1vg46phvk9lr59o8tctl7qac.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_app_prjk",
+            "certificate_hash": "93e7b7f143ee752b9f0db936b167e85704fb2154"
+          }
+        },
+        {
+          "client_id": "603089776461-e4dk83tbfprq8evcuq3jd9rb21gvr2mm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoVHZQAR74zGvb7lZV2q-A4NmFIZi0xvA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "603089776461-e4dk83tbfprq8evcuq3jd9rb21gvr2mm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
