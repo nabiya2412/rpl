@@ -1,33 +1,33 @@
 import 'dart:convert';
 import 'file:///F:/Rpl_project/flutter_app_prjk/lib/Crud/adddosen.dart';
+import 'package:flutter_app_prjk/Crud/addmhs.dart';
 import 'package:flutter_app_prjk/Mahasiswa.dart';
-import 'package:flutter_app_prjk/detailmhs.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'dart:async';
 //import 'dart:html';
 //import './Detail.dart';
 
-class Dosen extends StatefulWidget {
-  Dosen({Key key, @required this.title}) : super(key: key);
+class Mahasiswa extends StatefulWidget {
+  Mahasiswa({Key key, @required this.title}) : super(key: key);
   final String title;
 
   @override
-  _DosenState createState() => _DosenState(title);
+  _MahasiswaState createState() => _MahasiswaState(title);
 }
 
-class _DosenState extends State<Dosen> {
+class _MahasiswaState extends State<Mahasiswa> {
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
   final String title;
   bool isLoading = false;
-  Dosen dsn = new Dosen();
-  _DosenState(this.title);
+  Mahasiswa mhs = new Mahasiswa();
+  _MahasiswaState(this.title);
 
   void initState() {
     super.initState();
   }
-  Future<List> read() async  {
-    final response= await http.get("http:192.168.12.35/baru/read.php");
+  Future<List> getData() async  {
+    final response= await http.get("http:192.168.12.35/baru/getdata.php");
     return json.decode(response.body);
   }
   @override
@@ -41,7 +41,7 @@ class _DosenState extends State<Dosen> {
             onPressed: (){
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context)=> AddDosen(title :"Input Data Dosen")),
+                MaterialPageRoute(builder: (context)=> AddMhs(title :"Input Data Mahasiswa")),
                 //then(onGoBack);
               );
             },
@@ -49,38 +49,43 @@ class _DosenState extends State<Dosen> {
         ],
       ),
       body: new FutureBuilder<List>(
-        future:read(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) print(snapshot.error);
+        future: getData() ,
+        builder: (context, snapshot){
+          if(snapshot.hasError) print(snapshot.error);
+
           return snapshot.hasData
-              ? new ItemList(list: snapshot.data,)
-              : new Center(child: new CircularProgressIndicator(),);
+              ? new DsnList()
+              : new Center( child:  new CircularProgressIndicator(),);
+
         },
       ),
     );
-  }}
-class ItemList extends StatelessWidget{
+
+
+  }
+}
+class DsnList extends StatelessWidget{
   final List list;
-  ItemList({this.list});
+  DsnList({this.list});
 
   @override
   Widget build(BuildContext context){
     return new ListView.builder(
-      itemCount: list==null ? 0: list.length,
-      itemBuilder: (context, i){
+      itemCount: list == null ? 0 : list.length,
+      itemBuilder: (context, i) {
         return new Container(
           padding: const EdgeInsets.all(10.0),
           child: new GestureDetector(
             onTap: ()=>Navigator.of(context).push(
                 new MaterialPageRoute(
-                    builder: (BuildContext context)=>  new DetailMhs(list:list , index: i,)
+                  builder: (BuildContext context)=>  new AddMhs(),
                 )
             ),
             child: new Card(
               child: new ListTile(
-                title: new Text(list[i]['id_dosen']),
+                title: new Text(list[i]['nim']),
                 leading: new Icon(Icons.widgets),
-                subtitle: new Text("Nik : ${list[i]['nik']}"),
+                subtitle: new Text("nama : ${list[i]['nama']}"),
               ),
             ),
           ),
@@ -89,4 +94,3 @@ class ItemList extends StatelessWidget{
     );
   }
 }
-

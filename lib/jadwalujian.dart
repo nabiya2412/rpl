@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_prjk/addjadwal.dart';
-import 'package:flutter_app_prjk/addmhs.dart';
+import 'file:///F:/Rpl_project/flutter_app_prjk/lib/Crud/addjadwal.dart';
+import 'file:///F:/Rpl_project/flutter_app_prjk/lib/Crud/addmhs.dart';
 import 'package:flutter_app_prjk/detailmhs.dart';
 import 'package:http/http.dart' as http;
 //import 'lib.dart';

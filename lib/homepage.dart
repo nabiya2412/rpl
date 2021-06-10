@@ -1,13 +1,14 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app_prjk/jadwalkp.dart';
 import 'package:flutter_app_prjk/kp.dart';
-import 'package:flutter_app_prjk/mahasiswa.dart';
 import 'package:flutter_app_prjk/main.dart';
 import 'package:flutter_app_prjk/prakp.dart';
 import 'package:flutter_app_prjk/suratketkp.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -35,7 +36,10 @@ class _HomePageState extends State<HomePage> {
   //Future<List> getData() async{
 
   //}
-
+  Future<List> getData() async  {
+    final response= await http.get("http:192.168.12.35/baru/getdata.php");
+    return json.decode(response.body);
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -119,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                   await pref.setInt("is_login", 0);
                   Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => Login(title: "Logout")),
+                      MaterialPageRoute(builder: (context) => Login()),
                   );
                 },
              ),

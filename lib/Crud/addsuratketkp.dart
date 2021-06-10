@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_prjk/suratketkp.dart';
 import 'package:http/http.dart' as http;
 class AddSuratKetKP extends StatefulWidget {
-  AddSuratKetKP({Key key, @required this.title}) : super(key: key);
+  AddSuratKetKP({Key key, @required this.title,this.list,this.index}) : super(key: key);
   final String title;
-
+  final List list;
+  final int index;
   @override
   _AddSuratKetKPState createState() => _AddSuratKetKPState(title);
 }
@@ -14,6 +16,7 @@ class _AddSuratKetKPState extends State<AddSuratKetKP> {
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
   final String title;
   final _formKey = GlobalKey<FormState>();
+  _AddSuratKetKPState(this.title);
 
   TextEditingController controllerSemester = new TextEditingController();
   TextEditingController controllerTahun = new TextEditingController();
@@ -27,7 +30,7 @@ class _AddSuratKetKPState extends State<AddSuratKetKP> {
   TextEditingController controllerDokumen = new TextEditingController();
 
   void AddSuratKetKP(){
-    var url="http://10.0.2.2/baru/addsurat.php";
+    var url="http://192.168.12.35/baru/addsurat.php";
 
     http.post(url, body: {
       "semester": controllerSemester.text,
@@ -42,7 +45,7 @@ class _AddSuratKetKPState extends State<AddSuratKetKP> {
       "dokumen": controllerDokumen.text,
     });
   }
-  _AddSuratKetKPState(this.title);
+
   void pilihSemester(String value){
     setState(() {
       _semester=value;
@@ -52,7 +55,22 @@ class _AddSuratKetKPState extends State<AddSuratKetKP> {
   @override
   void initState() {
     super.initState();
+    if(widget.index != null){
+
+      controllerSemester.text = widget.list[widget.index]['semester'];
+      controllerTahun.text = widget.list[widget.index]['tahun'];
+      controllerNim.text = widget.list[widget.index]['nim'];
+      controllerLembaga.text = widget.list[widget.index]['lembaga'];
+      controllerPimpinan.text = widget.list[widget.index]['pimpinan'];
+      controllerNoTelp.text = widget.list[widget.index]['notelp'];
+      controllerAlamat.text = widget.list[widget.index]['alamat'];
+      controllerFax.text = widget.list[widget.index]['fax'];
+      controllerStatus.text = widget.list[widget.index]['status'];
+      controllerDokumen.text = widget.list[widget.index]['dokumen'];
+    }
+
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +84,7 @@ class _AddSuratKetKPState extends State<AddSuratKetKP> {
           padding: EdgeInsets.all(20.0),
           child: Column(
             children: [
-// TextField(),
+           // TextField(),
               new Padding(padding: new EdgeInsets.only(top: 20.0),),
            new Row(
             children: <Widget>[
@@ -186,7 +204,7 @@ class _AddSuratKetKPState extends State<AddSuratKetKP> {
                 ),
                 //color: Colors.blue,
                 onPressed: () {
-                  AddSuratKetKP();
+                  SuratKetKP();
                   Navigator.pop(context);
                 },
               ),

@@ -5,7 +5,6 @@ import 'package:flutter_app_prjk/daftarbimbingan.dart';
 import 'package:flutter_app_prjk/daftarregis.dart';
 import 'package:flutter_app_prjk/dosen.dart';
 import 'package:flutter_app_prjk/jadwalujian.dart';
-import 'package:flutter_app_prjk/mahasiswa.dart';
 import 'package:flutter_app_prjk/main.dart';
 import 'package:flutter_app_prjk/verifikasi.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -123,7 +122,7 @@ class _DashboardDosenState extends State<DashboardDosen> {
                   await pref.setInt("is_login", 0);
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => Login(title: "Logout")),
+                    MaterialPageRoute(builder: (context) => Login()),
                   );
                 },
               ),

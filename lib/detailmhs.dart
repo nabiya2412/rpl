@@ -12,7 +12,7 @@ class _DetailMhsState extends State<DetailMhs> {
   @override
   Widget build(BuildContext context){
     return new Scaffold(
-      appBar: new AppBar(title: new Text("${widget.list[widget.index]['nim']}")),
+      appBar: new AppBar(title: new Text("${widget.list[widget.index]['nama']}")),
       body: new Container(
         height: 250.0,
         padding: const EdgeInsets.all(20.0),
@@ -21,10 +21,8 @@ class _DetailMhsState extends State<DetailMhs> {
             child: new Column(
               children: <Widget>[
                 new Padding(padding: const EdgeInsets.only(top: 30.0),),
-                new Text(widget.list[widget.index]['nim'], style: new TextStyle(fontSize: 20.0),),
-                new Text("Nama Mahasiswa : ${widget.list[widget.index]['nama']}", style: new TextStyle(fontSize: 20.0),),
-                new Text("Semester : ${widget.list[widget.index]['semester']}", style: new TextStyle(fontSize: 20.0),),
-                new Text("Tahun : ${widget.list[widget.index]['tahun']}", style: new TextStyle(fontSize: 20.0),),
+                new Text(widget.list[widget.index]['nama'], style: new TextStyle(fontSize: 20.0),),
+                new Text("Nik  : ${widget.list[widget.index]['nama']}", style: new TextStyle(fontSize: 20.0),),
                 new Text("Email : ${widget.list[widget.index]['email']}", style: new TextStyle(fontSize: 20.0),),
                 new Padding(padding: const EdgeInsets.only(top: 30.0),),
 

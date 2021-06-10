@@ -1,7 +1,10 @@
 
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_prjk/Crud/addsuratketkp.dart';
 //import 'http/http.dart' as http;
 class SuratKetKP extends StatefulWidget {
   SuratKetKP({Key key, @required this.title}) : super(key: key);
@@ -11,146 +14,75 @@ class SuratKetKP extends StatefulWidget {
 }
 
 class _SuratKetKPState extends State<SuratKetKP> {
-  List<String> semester=["Genap", "Ganjil"];
-  String _semester="Ganjil";
   final GlobalKey<FormState> _formState = GlobalKey<FormState>();
   final String title;
-  final _formKey = GlobalKey<FormState>();
-
+  bool isLoading = false;
+  SuratKetKP stk = new SuratKetKP();
 
   _SuratKetKPState(this.title);
-  void pilihSemester(String value){
-    setState(() {
-      _semester=value;
-    });
+
+
+
+  void initState() {
+    super.initState();
   }
-  bool isLoading = false;
+  Future<List> getData() async  {
+    var url = 'http://192.168.12.35/baru/getdatask.php';
+    var response = await http.get(url);
+    // final response= await http.get("http://192.168.12.35/baru/getdata.php");
+    return json.decode(response.body);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Input Surat Keterangan KP"),
-      ),
-      body: Form(
-        key: _formKey,
-        child: Container(
-          padding: EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-// TextField(),
-              new Padding(padding: new EdgeInsets.only(top: 20.0),),
-              new Row(
-                children: <Widget>[
-                  new Text("Semester", style: new TextStyle(fontSize: 20.0,color: Colors.blue),),
-                  new DropdownButton(
-                    onChanged: (String value) {
-                      pilihSemester(value);
-                    },
-                    value: _semester,
-                    items: semester.map((String value){
-                      return new DropdownMenuItem(
-                        value: value,
-                        child: new Text(value),
-                      );
-                    }).toList(),
-                  ),
-                ],
-              ),
-              TextFormField(
-                decoration: new InputDecoration(
-                  hintText: "2021",
-                  labelText: "Tahun",
-                  //icon: Icon(Icons.people),
-                  border: OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(5.0)),
-                ),
-
-              ),
-              TextFormField(
-                decoration: new InputDecoration(
-                  hintText: "",
-                  labelText: "Nim",
-                  //icon: Icon(Icons.people),
-                  border: OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(5.0)),
-                ),
-              ),
-              TextFormField(
-                decoration: new InputDecoration(
-                  hintText: "",
-                  labelText: "Lembaga",
-                  //icon: Icon(Icons.people),
-                  border: OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(5.0)),
-                ),
-              ),
-              TextFormField(
-                decoration: new InputDecoration(
-                  hintText: "",
-                  labelText: "Pimpinan",
-                  //icon: Icon(Icons.people),
-                  border: OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(5.0)),
-                ),
-              ),
-              TextFormField(
-                decoration: new InputDecoration(
-                  hintText: "",
-                  labelText: "No Telpon",
-                  //icon: Icon(Icons.people),
-                  border: OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(5.0)),
-                ),
-              ),
-              TextFormField(
-                decoration: new InputDecoration(
-                  hintText: "",
-                  labelText: "Alamat",
-                  //icon: Icon(Icons.people),
-                  border: OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(5.0)),
-                ),
-              ),
-              TextFormField(
-                decoration: new InputDecoration(
-                  hintText: "",
-                  labelText: "Fax",
-                  //icon: Icon(Icons.people),
-                  border: OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(5.0)),
-                ),
-              ),
-              TextFormField(
-                decoration: new InputDecoration(
-                  hintText: "",
-                  labelText: "Dokumen",
-                  //icon: Icon(Icons.people),
-                  border: OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(5.0)),
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-
-
-
-              ElevatedButton(
-                child: Text(
-                  "Submit",
-                  style: TextStyle(color: Colors.white),
-
-                ),
-                //color: Colors.blue,
-                onPressed: () {
-                  if (_formKey.currentState.validate()) {}
-                },
-              ),
-            ],
+        title: Text(widget.title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context)=> AddSuratKetKP(title :"Input Data Pengajuan Surat Keterangan KP")),
+                //then(onGoBack);
+              );
+            },
           ),
-        ),
+        ],
+      ),
+      body: new FutureBuilder<List>(
+        future: getData() ,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) print(snapshot.error);
+
+          return snapshot.hasData
+              ? ListView.builder(
+              itemCount: snapshot.data.length,
+              itemBuilder: (context, index) {
+                List list = snapshot.data;
+                return ListTile(
+                  leading: GestureDetector(child: Icon(Icons.edit),
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => AddSuratKetKP(),),);
+                      debugPrint('Edit Clicked');
+                    },),
+                  title: Text(list[index]['nim']),
+                  subtitle: Text(list[index]['nama']),
+                  trailing: GestureDetector(child: Icon(Icons.delete),
+                    onTap: (){
+                      setState(() {
+                        http.post(Uri.parse("http:/192.168.12.35/baru/read.php"),body: {
+                          'nim' : list[index]['nim'],
+                        });
+                      });
+                      debugPrint('delete Clicked');
+                    },),
+                );
+              }
+          )
+              : CircularProgressIndicator();
+        },
       ),
     );
   }
 }
-

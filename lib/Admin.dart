@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_prjk/addadmin.dart';
-import 'package:flutter_app_prjk/addmhs.dart';
+import 'file:///F:/Rpl_project/flutter_app_prjk/lib/Crud/addadmin.dart';
+import 'file:///F:/Rpl_project/flutter_app_prjk/lib/Crud/addmhs.dart';
 
 class Admin extends StatefulWidget {
   Admin({Key key, @required this.title}) : super(key: key);

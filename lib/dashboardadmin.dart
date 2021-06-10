@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_prjk/Admin.dart';
+import 'package:flutter_app_prjk/Mahasiswa.dart';
 import 'package:flutter_app_prjk/bataspelkp.dart';
 import 'package:flutter_app_prjk/daftarregis.dart';
 import 'package:flutter_app_prjk/dosen.dart';
 import 'package:flutter_app_prjk/jadwalujian.dart';
-import 'package:flutter_app_prjk/mahasiswa.dart';
 import 'package:flutter_app_prjk/main.dart';
 import 'package:flutter_app_prjk/verifikasi.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -127,7 +127,7 @@ class _DashboardadminState extends State<Dashboardadmin> {
                   Navigator.pop(context);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Mahasiswa(title: "Data Mahasiswa")),
+                    MaterialPageRoute(builder: (context) => Mahasiswa()),
                   );
                 },
               ),
@@ -146,7 +146,7 @@ class _DashboardadminState extends State<Dashboardadmin> {
                   await pref.setInt("is_login", 0);
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => Login(title: "Logout")),
+                    MaterialPageRoute(builder: (context) => Login()),
                   );
                 },
               ),

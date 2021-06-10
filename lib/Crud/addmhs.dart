@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_prjk/Mahasiswa.dart';
 import 'package:http/http.dart' as http;
 
 class AddMhs extends StatefulWidget {
@@ -38,16 +39,16 @@ class _AddMhsState extends State<AddMhs> {
   }
   bool isLoading = false;
 
-  @override
-  void initState() {
-    super.initState();
-  }
+
 void pilihSemester(String value){
     setState(() {
       _semester=value;
     });
 }
-
+  @override
+  void initState() {
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,7 +129,7 @@ void pilihSemester(String value){
               ),
               new Padding(padding: new EdgeInsets.only(top: 20.0),),
               TextFormField(
-                controller: controllerTahun,
+                controller: controllerEmail,
                 decoration: new InputDecoration(
                   hintText: "",
                   labelText: "Email",
@@ -137,24 +138,25 @@ void pilihSemester(String value){
                       borderRadius: new BorderRadius.circular(5.0)),
                 ),
               ),
-
-
+              SizedBox(
+                height: 15,
+              ),
 
               ElevatedButton(
-               child: Text(
-               "Submit",
-                style: TextStyle(color: Colors.white),
+                child: Text(
+                  "Submit",
+                  style: TextStyle(color: Colors.white),
                 ),
-               //color: Colors.blue,
-              onPressed: () {
-                addMhs();
-                Navigator.pop(context);
-              },
-),
-],
-),
-),
-),
-);
-}
+                //color: Colors.blue,
+                onPressed: () {
+                  Mahasiswa();
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+           ),
+         ),
+      ),
+    );
+  }
 }
